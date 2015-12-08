@@ -80,6 +80,10 @@ func (self *ReadOptions) SetTailing(value bool) {
 	C.rocksdb_readoptions_set_tailing(self.c, boolToChar(value))
 }
 
+func (self *ReadOptions) SetTotalOrderMode(value bool) {
+	C.rocksdb_readoptions_set_total_order_mode(self.c, boolToChar(value))
+}
+
 // Destroy deallocates the ReadOptions object.
 func (self *ReadOptions) Destroy() {
 	C.rocksdb_readoptions_destroy(self.c)

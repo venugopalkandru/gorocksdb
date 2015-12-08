@@ -18,6 +18,8 @@ const (
 	SnappyCompression = CompressionType(1)
 	ZlibCompression   = CompressionType(2)
 	BZip2Compression  = CompressionType(3)
+	LZ4Compression    = CompressionType(4)
+	LZ4HCCompression  = CompressionType(5)
 )
 
 type CompactionStyle uint
@@ -886,6 +888,10 @@ func (self *Options) SetHashLinkListRep(bucketCount int) {
 //                  many keys for binary search inside each hash bucket.
 func (self *Options) SetPlainTableFactory(keyLen uint32, bloomBitsPerKey int, hashTableRatio float64, indexSparseness int) {
 	C.rocksdb_options_set_plain_table_factory(self.c, C.uint32_t(keyLen), C.int(bloomBitsPerKey), C.double(hashTableRatio), C.size_t(indexSparseness))
+}
+
+func (self *Options) SetCreateIfMissingColumnFamilies(value bool) {
+	C.rocksdb_options_set_create_missing_column_families(self.c, boolToChar(value))
 }
 
 // Destroy deallocates the Options object.
